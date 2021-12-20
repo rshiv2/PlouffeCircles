@@ -4,17 +4,18 @@ float alpha;
 final float THRESHOLD = 1.0;
 final int MIN_ALPHA = 0;
 final int MAX_ALPHA = 5;
-float step = 0.5;
+float step;
 
 void setup() {
   size(640, 400);
   stroke(0);
   
   /* Edit these fields!! */
-  int num_vertices = 100;
+  int num_vertices = 200;
   alpha = 2;
   int radius = 150;
   PVector center = new PVector(width / 2, height / 2);
+  step = 0.5;
   frameRate(20);
   /***********************/
   
@@ -23,7 +24,7 @@ void setup() {
 }
 
 void draw() {
-  background(255);
+  background(0);
   
   float diff = c.update();
   c.display();
