@@ -65,7 +65,7 @@ class Circle {
       float currDstAngle = numToAngle(c.getDstNum());
       float targetDstAngle = numToAngle(i * alpha); 
       
-      float newDstAngle = lerp(currDstAngle, targetDstAngle, 0.1);
+      float newDstAngle = lerp(currDstAngle, targetDstAngle, 0.075);
       PVector newDst = angleToPoint(newDstAngle);
 
       totalDiff += c.setDst( newDst );
@@ -78,7 +78,7 @@ class Circle {
   void display() {
     for (int id = 0; id < num_vertices; id++) {
       Chord c = chords.get(id);
-      c.display(); 
+      c.display(num_vertices); 
     }
   }
   

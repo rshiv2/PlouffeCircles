@@ -1,7 +1,7 @@
 
 Circle c;
 float alpha;
-final float THRESHOLD = 1.0;
+final float THRESHOLD = 20.0;
 final int MIN_ALPHA = 0;
 final int MAX_ALPHA = 5;
 float step;
@@ -16,7 +16,7 @@ void setup() {
   int radius = 150;
   PVector center = new PVector(width / 2, height / 2);
   step = 0.5;
-  frameRate(20);
+  frameRate(30);
   /***********************/
   
   
@@ -24,7 +24,7 @@ void setup() {
 }
 
 void draw() {
-  background(0);
+  background(15, 15, 30);
   
   float diff = c.update();
   c.display();
