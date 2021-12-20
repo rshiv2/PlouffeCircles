@@ -1,5 +1,11 @@
 // Circle class
 
+/**
+* A Circle is composed of a set of vertices that are numbered
+* in counter-clockwise order. Circles also have an 'alpha'
+* parameter. We connect vertices v1 and v2 if 
+* (v1 * alpha) % num_vertices == v2.
+*/
 class Circle {
  
   private int num_vertices;    // number of vertices in our circle
@@ -10,7 +16,7 @@ class Circle {
   
   Circle(int n_v, float a, PVector c, int rad) {
     
-    num_vertices = n_v;;
+    num_vertices = n_v;        
     alpha = a;
     center = c;
     radius = rad;
@@ -18,32 +24,25 @@ class Circle {
     
     // Insert chords
     for (int i = 0; i < num_vertices; i++) {
-      addChord(i, i * alpha, i);
+      addChord(i, i * alpha);
     }
   }
   
-  void printChords() {
-    for (int i = 0; i < chords.size(); i++) {
-      Chord c = chords.get(i);
-      print("Chord " + c + " (srcNum, dstnum) = (");
-      println(c.getSrcNum() + ", " + c.getDstNum() + ")");
-    }
-  }
-  
-  void addChord(float src, float dst, int i) {
+  // Helper function for creating new chords
+  void addChord(float srcNum, float dstNum) {
     
     // compute coordinates of Chord's src 
-      float thetaSrc = (float)src * 360 / num_vertices;
+      float thetaSrc = (float)srcNum * 360 / num_vertices;
       float bx = radius * cos(thetaSrc) + center.x;
       float by = radius * sin(thetaSrc) + center.y;
        
       // compute coordinates of Chord's dst 
-      float thetaDst = (float)dst * 360 / num_vertices;
+      float thetaDst = (float)dstNum * 360 / num_vertices;
       float hx = radius * cos(thetaDst) + center.x;
       float hy = radius * sin(thetaDst) + center.y;
       
       // insert Chord into Chord ArrayList
-      chords.add(new Chord(new PVector(bx, by), new PVector(hx, hy), i, i * alpha)); 
+      chords.add(new Chord(new PVector(bx, by), new PVector(hx, hy), srcNum, dstNum)); 
     
   }
   
@@ -75,6 +74,7 @@ class Circle {
     return totalDiff;
   }
   
+  // Render all chords on screen
   void display() {
     for (int id = 0; id < num_vertices; id++) {
       Chord c = chords.get(id);
@@ -82,7 +82,8 @@ class Circle {
     }
   }
   
-  /*** Conversion Funcs ***/
+  // Handy Conversion Functions
+  // --------------------------
   
   // Convert real number to angle on circle
   float numToAngle(float num) {

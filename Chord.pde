@@ -1,5 +1,13 @@
 // Chord class
 
+
+/**
+* A Chord instance is just a wrapper for a Processing line segment.
+* Instances sit on the circumference of Circle instances. Their
+* endpoints are vertices that are equally spaced along the Circle's
+* circumference. The endpoints are referred to as src and dst.
+* These vertices are numbered in clockwise order.
+*/
 class Chord {
   private PVector src, dst;          // pixel coordinates of chord's endpoints
   private float srcNum, dstNum;      // numbers pointed to by src and dst
@@ -11,6 +19,7 @@ class Chord {
     dstNum = tn;
   }
   
+  // Renders chord with a color gradient
   void display(int maxNum) {
     
     colorMode(HSB, 360, 100, 100);
@@ -22,7 +31,7 @@ class Chord {
     color srcColor = color(hSrc, 99, 99);
     color dstColor = color(hDst, 99, 99);
     
-    int steps = 20;
+    int steps = 20;    // gradient is discretized into "steps" segments of different colors
     for (int i = 0; i < steps; i++) {
       stroke(lerpColor(srcColor, dstColor, i / (float)steps));
       PVector segSrc = PVector.lerp(src, dst, i / (float)steps);
@@ -38,6 +47,7 @@ class Chord {
     
     PVector midpoint = PVector.div(PVector.add(src, dst), 2);
     
+    // First set color gradient from src endpoint to midpoint
     for (int i = 0; i < 50; i++) {
       stroke(lerpColor(endColor, midColor, i / 50.0));
       PVector segSrc = PVector.lerp(src, midpoint, i / 50.0);
@@ -45,6 +55,7 @@ class Chord {
       line(segSrc.x, segSrc.y, segMid.x, segMid.y);
     }
     
+    // Next, set color gradient from midpoint to dst endpoint
     for (int i = 0; i < 50; i++) {
       stroke(lerpColor(midColor, endColor, i / 50.0));
       PVector segMid = PVector.lerp(midpoint, dst, i / 50.0);
@@ -56,7 +67,8 @@ class Chord {
     colorMode(RGB, 255, 255, 255);
   }
   
-  /*** Setters ***/
+  // Setters
+  // ---------------
   float setDst(PVector target) {
     float diff = PVector.dist(dst, target);
     dst = target;
@@ -66,9 +78,9 @@ class Chord {
   void setDstNum(float newNum) {
     dstNum = newNum;  
   }
-  /***************/
   
-  /*** Getters ***/
+  // Getters
+  // ----------------
   PVector getSrc() {
     return src;  
   }
@@ -84,5 +96,5 @@ class Chord {
   float getDstNum() {
     return dstNum; 
   }
-  /****************/
+
 }

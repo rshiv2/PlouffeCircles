@@ -1,4 +1,3 @@
-
 Circle c;
 float alpha;
 final float THRESHOLD = 20.0;
@@ -8,27 +7,27 @@ float step;
 
 void setup() {
   size(640, 400);
+  frameRate(30);
   stroke(0);
   
-  /* Edit these fields!! */
+  // Edit these fields to customize the animation!
+  // ---------------------------------------------
   int num_vertices = 200;
-  alpha = 2;
   int radius = 150;
   PVector center = new PVector(width / 2, height / 2);
   step = 0.5;
-  frameRate(30);
-  /***********************/
-  
+  alpha = 2;
   
   c = new Circle(num_vertices, alpha, center, radius);
 }
 
 void draw() {
-  background(15, 15, 30);
+  background(12, 24, 36);
   
   float diff = c.update();
   c.display();
   
+  // if animation converges, increment alpha
   if (diff < THRESHOLD) {
     float curr_alpha = c.getAlpha();
     if (curr_alpha >= MAX_ALPHA) {
