@@ -22,3 +22,6 @@ This project was inspired by a [Mathologer video](https://www.youtube.com/watch?
 You'll need the Processing IDE to run this code. Download it [here](https://processing.org/download).
 
 The main script is titled ```TimesCircle.pde```. In it you'll see a number of parameters that you can tweak in order to change the animation. The most interesting parameter is called ```step```. This dictates the values of alpha that the code loops through.
+
+To modify colors, you can change the ```hSrc``` and ```hDst``` variables in ```Chord.pde```. The first and second arguments to the linear interpolation (```lerp```) function provide the H value of an HSB-formatted color. The current settings will make an image with the same color
+scheme as ```images/img1``` (ie. red-violet).
