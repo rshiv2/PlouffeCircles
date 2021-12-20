@@ -24,10 +24,12 @@ class Chord {
     
     colorMode(HSB, 360, 100, 100);
     
+    // Modify these two variables to change the chord colors:
+    float hSrc = lerp(220, 359, (float)srcNum / maxNum);    
+    float hDst = lerp(220, 359, (float)(dstNum % maxNum) / maxNum);
+    
     // Uncomment this section to have chord endpoint be different colors
     // -----------------------------------------------------------------
-    float hSrc = lerp(220, 359, (float)srcNum / maxNum);
-    float hDst = lerp(220, 359, (float)(dstNum % maxNum) / maxNum);
     color srcColor = color(hSrc, 99, 99);
     color dstColor = color(hDst, 99, 99);
     
