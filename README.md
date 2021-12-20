@@ -9,6 +9,12 @@ In the provided code, loop through several values of alpha and render the corres
 
 Ok, enough reading, here are a couple of frames from the code:
 
+
+
+<img src="images/img1.png" alt="Image 1" width="240" height="200"> <img src="images/img2.png" alt="Image 1" width="290" height="200">
+
+<img src="images/img3.png" alt="Image 1" width="260" height="200"> <img src="images/img4.png" alt="Image 1" width="230" height="200">
+
 This project was inspired by a [Mathologer video](https://www.youtube.com/watch?v=qhbuKbxJsk8&t=333s&ab_channel=Mathologer) that explored times tables and modular arithmetic. The original idea of using Times Circles instead of Times Tables comes from a French mathematician named [Simon Plouffe](https://en.wikipedia.org/wiki/Simon_Plouffe). All the credit for this project goes to Mathologer and Simon Plouffe.
 
 
