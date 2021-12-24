@@ -9,62 +9,45 @@
 * These vertices are numbered in clockwise order.
 */
 class Chord {
+
   private PVector src, dst;          // pixel coordinates of chord's endpoints
   private float srcNum, dstNum;      // numbers pointed to by src and dst
   
+  private float hInit;               // lowest H value to use for color (HSB-formatted)
+  private float hRange;              // range of H values o use for color (HSB-formatted)
+    
   Chord(PVector s, PVector d, float sn, float tn) {
     src = s;
     dst = d;
     srcNum = sn;
     dstNum = tn;
+    
+    hInit = 0;
+    hRange = 80;
   }
   
   // Renders chord with a color gradient
   void display(int maxNum) {
     
     colorMode(HSB, 360, 100, 100);
+    hInit = (hInit + 0.5) % 360;
     
-    // Modify these two variables to change the chord colors:
-    float hSrc = lerp(220, 359, (float)srcNum / maxNum);    
-    float hDst = lerp(220, 359, (float)(dstNum % maxNum) / maxNum);
-    
-    // Uncomment this section to have chord endpoint be different colors
-    // -----------------------------------------------------------------
-    color srcColor = color(hSrc, 99, 99);
-    color dstColor = color(hDst, 99, 99);
+    // These two variables set the chord colors:
+    float hSrc = lerp(hInit, hInit + hRange, (float)srcNum / maxNum);    
+    float hDst = lerp(hInit, hInit + hRange, (float)(dstNum % maxNum) / maxNum);
     
     int steps = 20;    // gradient is discretized into "steps" segments of different colors
     for (int i = 0; i < steps; i++) {
-      stroke(lerpColor(srcColor, dstColor, i / (float)steps));
+      
+      // Determine appropriate color for segment i
+      float hLerp = lerp(hSrc, hDst, i / (float) steps) % 360;
+      stroke(hLerp, 99, 99);
+      
+      // Determine coordinates of segment i then draw
       PVector segSrc = PVector.lerp(src, dst, i / (float)steps);
       PVector segDst = PVector.lerp(src, dst, (i + 1) / (float)steps);
       line(segSrc.x, segSrc.y, segDst.x, segDst.y);
     }
-    
-    // Uncomment this section to have chord endpoints be same color, but midpoint be different color
-    // ----------------------------------------------------------------------------------------------
-    /* 
-    color endColor = color(srcNum % 360, 100, 100);
-    color midColor = color(dstNum % 360, 100, 100);
-    
-    PVector midpoint = PVector.div(PVector.add(src, dst), 2);
-    
-    // First set color gradient from src endpoint to midpoint
-    for (int i = 0; i < 50; i++) {
-      stroke(lerpColor(endColor, midColor, i / 50.0));
-      PVector segSrc = PVector.lerp(src, midpoint, i / 50.0);
-      PVector segMid = PVector.lerp(src, midpoint, (i + 1) / 50.0);
-      line(segSrc.x, segSrc.y, segMid.x, segMid.y);
-    }
-    
-    // Next, set color gradient from midpoint to dst endpoint
-    for (int i = 0; i < 50; i++) {
-      stroke(lerpColor(midColor, endColor, i / 50.0));
-      PVector segMid = PVector.lerp(midpoint, dst, i / 50.0);
-      PVector segDst = PVector.lerp(midpoint, dst, (i + 1) / 50.0);
-      line(segMid.x, segMid.y, segDst.x, segDst.y);
-    }
-    */
     
     colorMode(RGB, 255, 255, 255);
   }
