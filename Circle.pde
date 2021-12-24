@@ -24,26 +24,8 @@ class Circle {
     
     // Insert chords
     for (int i = 0; i < num_vertices; i++) {
-      addChord(i, i * alpha);
+      chords.add(new Chord(i, i * alpha, center, radius, num_vertices));
     }
-  }
-  
-  // Helper function for creating new chords
-  void addChord(float srcNum, float dstNum) {
-    
-    // compute coordinates of Chord's src 
-      float thetaSrc = (float)srcNum * 360 / num_vertices;
-      float bx = radius * cos(thetaSrc) + center.x;
-      float by = radius * sin(thetaSrc) + center.y;
-       
-      // compute coordinates of Chord's dst 
-      float thetaDst = (float)dstNum * 360 / num_vertices;
-      float hx = radius * cos(thetaDst) + center.x;
-      float hy = radius * sin(thetaDst) + center.y;
-      
-      // insert Chord into Chord ArrayList
-      chords.add(new Chord(new PVector(bx, by), new PVector(hx, hy), srcNum, dstNum)); 
-    
   }
   
   float getAlpha() {
@@ -52,23 +34,16 @@ class Circle {
   
   void setAlpha(float new_alpha) {
    alpha = new_alpha; 
+   for (Chord chord : chords) {
+     chord.setDstNum(chord.getSrcNum() * alpha);  
+   }
   }
   
-  // Updates each chord in circle via linear interpolation
+  // Updates each chord in circle 
   float update() {
     float totalDiff = 0.0;
-    
-    for (int i = 0; i < chords.size(); i++) {
-      
-      Chord c = chords.get(i);
-      float currDstAngle = numToAngle(c.getDstNum());
-      float targetDstAngle = numToAngle(i * alpha); 
-      
-      float newDstAngle = lerp(currDstAngle, targetDstAngle, 0.075);
-      PVector newDst = angleToPoint(newDstAngle);
-
-      totalDiff += c.setDst( newDst );
-      c.setDstNum(angleToNum(newDstAngle));
+    for (Chord chord : chords) {
+      totalDiff += chord.step();  
     }
     
     return totalDiff;
