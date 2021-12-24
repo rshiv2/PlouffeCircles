@@ -2,8 +2,9 @@ Circle c;
 float alpha;
 final float THRESHOLD = 1e-3;
 final int MIN_ALPHA = 100;
-final int MAX_ALPHA = 150;
+final int MAX_ALPHA = 120;
 float step;
+int frame;
 
 void setup() {
   size(400, 400);
@@ -17,7 +18,7 @@ void setup() {
   PVector center = new PVector(width / 2, height / 2);
   step = 0.5;
   alpha = MIN_ALPHA;
-  
+  frame = 0;
   c = new Circle(num_vertices, alpha, center, radius);
 }
 
@@ -30,10 +31,19 @@ void draw() {
   // if animation converges, increment alpha
   if (diff <= THRESHOLD) {
     float currAlpha = c.getAlpha();
-    
-    c.setAlpha((currAlpha + step) % MAX_ALPHA); 
+    float newAlpha = currAlpha + step >= MAX_ALPHA ? MIN_ALPHA : currAlpha + step;
+    c.setAlpha(newAlpha); 
     println("alpha = " + c.getAlpha());
+  }
+  
+  saveFrame("img-#####.png");
+  frame++;
+  int numSecondsDesired = 30;
+  int fps = 60;
+  println("frame = " + frame + " / " + numSecondsDesired * fps + '\r');
+  if (frame > numSecondsDesired * fps) {
+    noLoop();
+    return;  
   }
 
 }
-  

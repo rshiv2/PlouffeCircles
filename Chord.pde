@@ -58,7 +58,7 @@ class Chord {
 
     // compute step size as function of 't'
     float a = 0.01;
-    float b = 1e-4;
+    float b = 5e-5;
     float dt = - a * t * (t - 1) + b;
     
     // Set new currNum and return diff
